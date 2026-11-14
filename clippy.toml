@@ -1,0 +1,9 @@
+# Production unwraps and boolean modes are forbidden.
+max-fn-params-bools = 0
+allow-unwrap-in-tests = true
+allow-expect-in-tests = true
+allow-print-in-tests = true
+too-many-lines-threshold = 50
+too-many-arguments-threshold = 5
+# Nesting at 3 is reviewed with .config/clippy-review/clippy.toml.
+# Enabling it in the strict profile would turn the existing review backlog into build failures.

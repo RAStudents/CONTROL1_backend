@@ -1,0 +1,9 @@
+/target/
+/.env
+/exports/
+__pycache__/
+/.venv/
+/quality-review.json
+/sql-quality.json
+/query-plans.json
+/integration-services.log

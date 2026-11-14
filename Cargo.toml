@@ -1,0 +1,57 @@
+[package]
+name = "control-backend"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.93"
+
+[dependencies]
+anyhow = "1"
+argon2 = "0.5"
+async-nats = "0.42"
+axum = { version = "0.8", features = ["ws"] }
+base64 = "0.22"
+chrono = { version = "0.4", features = ["serde"] }
+chrono-tz = "0.10"
+csv = "1"
+futures-util = "0.3"
+hex = "0.4"
+hmac = "0.12"
+jsonwebtoken = "9"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+serde_json_canonicalizer = "0.3"
+sha2 = "0.10"
+sqlx = { version = "0.8", default-features = false, features = ["runtime-tokio", "tls-rustls-ring", "postgres", "uuid", "chrono", "json", "migrate", "macros"] }
+tokio = { version = "1", features = ["full"] }
+tokio-util = { version = "0.7", features = ["io"] }
+tower-http = { version = "0.6", features = ["cors", "trace"] }
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+url = "2"
+uuid = { version = "1", features = ["v4", "serde"] }
+
+[lints.rust]
+unsafe_code = "forbid"
+unreachable_pub = "warn"
+unused_must_use = "deny"
+
+[lints.clippy]
+all = { level = "warn", priority = -1 }
+unwrap_used = "deny"
+await_holding_lock = "deny"
+clone_on_ref_ptr = "deny"
+fn_params_excessive_bools = "deny"
+wildcard_imports = "deny"
+dbg_macro = "deny"
+todo = "deny"
+unimplemented = "deny"
+redundant_clone = "warn"
+needless_collect = "warn"
+unnecessary_wraps = "warn"
+needless_pass_by_value = "warn"
+allow_attributes = "warn"
+allow_attributes_without_reason = "deny"
+
+# Readability metrics are emitted by the advisory complexity review, not suppressed.
+[package.metadata.quality]
+advisory_lints = ["too_many_lines", "excessive_nesting", "cognitive_complexity", "expect_used"]
