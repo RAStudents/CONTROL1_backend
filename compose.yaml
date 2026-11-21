@@ -1,0 +1,69 @@
+services:
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: control
+      POSTGRES_USER: control
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U control -d control"]
+      interval: 3s
+      timeout: 3s
+      retries: 15
+
+  nats:
+    image: nats:2.11-alpine
+    command: ["-js", "-sd", "/data"]
+    volumes:
+      - nats-data:/data
+
+  pgbouncer:
+    profiles: [contract]
+    build: tests/pgbouncer
+    environment:
+      PGPASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "pg_isready", "-h", "127.0.0.1", "-p", "6432", "-U", "control", "-d", "control"]
+      interval: 1s
+      timeout: 2s
+      retries: 30
+
+  api:
+    build: .
+    depends_on:
+      postgres:
+        condition: service_healthy
+      nats:
+        condition: service_started
+    environment:
+      PGHOST: postgres
+      PGPORT: 5432
+      PGDATABASE: control
+      PGUSER: control
+      PGPASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD}
+      DATABASE_SESSION_MODE: direct
+      NATS_URL: nats://nats:4222
+      BIND_ADDR: 0.0.0.0:8080
+      JWT_SECRET: ${JWT_SECRET:?set JWT_SECRET}
+      CURSOR_SECRET: ${CURSOR_SECRET:?set CURSOR_SECRET}
+      CURSOR_KEY_ID: ${CURSOR_KEY_ID:-v1}
+      CDN_HOSTS: ${CDN_HOSTS:-}
+      CORS_ORIGINS: ${CORS_ORIGINS:-}
+      MAX_SNAPSHOT_ITEMS: ${MAX_SNAPSHOT_ITEMS:-100000}
+      MAX_INGEST_BATCH_V1: ${MAX_INGEST_BATCH_V1:-100}
+      EXPORT_DIR: /exports
+    ports:
+      - "${BIND_HOST:-127.0.0.1}:${HTTP_PORT:-8080}:8080"
+    volumes:
+      - export-data:/exports
+    restart: unless-stopped
+
+volumes:
+  postgres-data:
+  nats-data:
+  export-data:
