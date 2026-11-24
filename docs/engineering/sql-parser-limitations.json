@@ -1,0 +1,35 @@
+{
+  "e67fda05dacea7a0b6290e8b69932ad27e5a0dd128af9273d1d6179e60f9ea0b": {
+    "path": "src/infrastructure/postgres.rs",
+    "sql": "SET TRANSACTION ISOLATION LEVEL REPEATABLE READ",
+    "sqlfluff_version": "4.5.0",
+    "reason": "SQLFluff 4.5.0 PostgreSQL grammar does not parse this PostgreSQL 16 transaction or multiple-locking-clause syntax.",
+    "validation": [
+      "tests/session_affinity.sh",
+      "tests/compose_smoke.py",
+      "tests/anchors.py"
+    ]
+  },
+  "c0989d49f9bbb8a7b1ec38548e80856d003a91de8035e6fcb991721147442c56": {
+    "path": "src/infrastructure/queries/access.rs",
+    "sql": "SELECT\n    s.id,\n    s.user_id,\n    a.frozen\nFROM sessions AS s\nINNER JOIN accounts AS a\n    ON a.id = s.user_id\nWHERE\n    s.refresh_hash = $1\n    AND s.revoked_at IS NULL\n    AND s.expires_at > clock_timestamp()\nFOR UPDATE OF s\nFOR SHARE OF a",
+    "sqlfluff_version": "4.5.0",
+    "reason": "SQLFluff 4.5.0 PostgreSQL grammar does not parse this PostgreSQL 16 transaction or multiple-locking-clause syntax.",
+    "validation": [
+      "tests/session_affinity.sh",
+      "tests/compose_smoke.py",
+      "tests/anchors.py"
+    ]
+  },
+  "2af4424f8a1dfa5f936e67d66123d29dbe99ae91a322dfeecc0b63ce818a8657": {
+    "path": "src/infrastructure/queries/events_snapshots.rs",
+    "sql": "SET TRANSACTION ISOLATION LEVEL REPEATABLE READ READ ONLY",
+    "sqlfluff_version": "4.5.0",
+    "reason": "SQLFluff 4.5.0 PostgreSQL grammar does not parse this PostgreSQL 16 transaction or multiple-locking-clause syntax.",
+    "validation": [
+      "tests/session_affinity.sh",
+      "tests/compose_smoke.py",
+      "tests/anchors.py"
+    ]
+  }
+}

@@ -1,0 +1,404 @@
+{
+  "command": [
+    "cargo",
+    "clippy",
+    "--workspace",
+    "--all-targets",
+    "--message-format=json",
+    "--",
+    "-W",
+    "clippy::too_many_lines",
+    "-W",
+    "clippy::excessive_nesting",
+    "-W",
+    "clippy::cognitive_complexity",
+    "-W",
+    "clippy::expect_used"
+  ],
+  "exit_code": 0,
+  "findings": [
+    {
+      "level": "warning",
+      "code": "clippy::excessive_nesting",
+      "message": "this block is too nested",
+      "file": "src/application/access.rs",
+      "line": 106
+    },
+    {
+      "level": "warning",
+      "code": "clippy::excessive_nesting",
+      "message": "this block is too nested",
+      "file": "src/application/events/snapshots.rs",
+      "line": 85
+    },
+    {
+      "level": "warning",
+      "code": "clippy::excessive_nesting",
+      "message": "this block is too nested",
+      "file": "src/application/events/snapshots.rs",
+      "line": 87
+    },
+    {
+      "level": "warning",
+      "code": "clippy::excessive_nesting",
+      "message": "this block is too nested",
+      "file": "src/application/export_worker.rs",
+      "line": 343
+    },
+    {
+      "level": "warning",
+      "code": "clippy::excessive_nesting",
+      "message": "this block is too nested",
+      "file": "src/application/gateway.rs",
+      "line": 65
+    },
+    {
+      "level": "warning",
+      "code": "clippy::excessive_nesting",
+      "message": "this block is too nested",
+      "file": "src/application/retention.rs",
+      "line": 190
+    },
+    {
+      "level": "warning",
+      "code": "clippy::excessive_nesting",
+      "message": "this block is too nested",
+      "file": "src/application/retention.rs",
+      "line": 193
+    },
+    {
+      "level": "warning",
+      "code": "clippy::excessive_nesting",
+      "message": "this block is too nested",
+      "file": "src/application/retention.rs",
+      "line": 242
+    },
+    {
+      "level": "warning",
+      "code": "clippy::excessive_nesting",
+      "message": "this block is too nested",
+      "file": "src/bootstrap.rs",
+      "line": 226
+    },
+    {
+      "level": "warning",
+      "code": "clippy::excessive_nesting",
+      "message": "this block is too nested",
+      "file": "src/domain/events.rs",
+      "line": 48
+    },
+    {
+      "level": "warning",
+      "code": "clippy::excessive_nesting",
+      "message": "this block is too nested",
+      "file": "src/domain/review.rs",
+      "line": 43
+    },
+    {
+      "level": "warning",
+      "code": "clippy::excessive_nesting",
+      "message": "this block is too nested",
+      "file": "src/domain/review.rs",
+      "line": 45
+    },
+    {
+      "level": "warning",
+      "code": "clippy::excessive_nesting",
+      "message": "this block is too nested",
+      "file": "src/domain/review.rs",
+      "line": 52
+    },
+    {
+      "level": "warning",
+      "code": "clippy::excessive_nesting",
+      "message": "this block is too nested",
+      "file": "src/domain/review.rs",
+      "line": 54
+    },
+    {
+      "level": "warning",
+      "code": "clippy::excessive_nesting",
+      "message": "this block is too nested",
+      "file": "src/domain/review.rs",
+      "line": 56
+    },
+    {
+      "level": "warning",
+      "code": "clippy::excessive_nesting",
+      "message": "this block is too nested",
+      "file": "src/infrastructure/stream/dispatcher.rs",
+      "line": 265
+    },
+    {
+      "level": "warning",
+      "code": "clippy::excessive_nesting",
+      "message": "this block is too nested",
+      "file": "src/infrastructure/stream/dispatcher.rs",
+      "line": 288
+    },
+    {
+      "level": "warning",
+      "code": "clippy::excessive_nesting",
+      "message": "this block is too nested",
+      "file": "src/infrastructure/stream/outbox.rs",
+      "line": 191
+    },
+    {
+      "level": "warning",
+      "code": "clippy::excessive_nesting",
+      "message": "this block is too nested",
+      "file": "src/transport/response.rs",
+      "line": 83
+    },
+    {
+      "level": "warning",
+      "code": "clippy::excessive_nesting",
+      "message": "this block is too nested",
+      "file": "src/transport/response.rs",
+      "line": 87
+    },
+    {
+      "level": "warning",
+      "code": "clippy::excessive_nesting",
+      "message": "this block is too nested",
+      "file": "src/transport/websocket/session.rs",
+      "line": 118
+    },
+    {
+      "level": "warning",
+      "code": "clippy::excessive_nesting",
+      "message": "this block is too nested",
+      "file": "src/transport/websocket/connection.rs",
+      "line": 123
+    },
+    {
+      "level": "warning",
+      "code": "clippy::excessive_nesting",
+      "message": "this block is too nested",
+      "file": "src/transport/websocket/connection.rs",
+      "line": 125
+    },
+    {
+      "level": "warning",
+      "code": "clippy::excessive_nesting",
+      "message": "this block is too nested",
+      "file": "src/transport/websocket/replay.rs",
+      "line": 53
+    },
+    {
+      "level": "warning",
+      "code": "clippy::excessive_nesting",
+      "message": "this block is too nested",
+      "file": "src/transport/websocket/replay.rs",
+      "line": 83
+    },
+    {
+      "level": "warning",
+      "code": "clippy::excessive_nesting",
+      "message": "this block is too nested",
+      "file": "src/transport/websocket/replay.rs",
+      "line": 85
+    },
+    {
+      "level": "warning",
+      "code": "clippy::excessive_nesting",
+      "message": "this block is too nested",
+      "file": "src/transport/websocket/replay.rs",
+      "line": 103
+    },
+    {
+      "level": "warning",
+      "code": "clippy::excessive_nesting",
+      "message": "this block is too nested",
+      "file": "src/transport/websocket/replay.rs",
+      "line": 105
+    },
+    {
+      "level": "warning",
+      "code": "clippy::excessive_nesting",
+      "message": "this block is too nested",
+      "file": "src/transport/websocket/replay.rs",
+      "line": 162
+    },
+    {
+      "level": "warning",
+      "code": "clippy::excessive_nesting",
+      "message": "this block is too nested",
+      "file": "src/transport/websocket/replay.rs",
+      "line": 167
+    },
+    {
+      "level": "warning",
+      "code": "clippy::excessive_nesting",
+      "message": "this block is too nested",
+      "file": "src/transport/websocket.rs",
+      "line": 165
+    },
+    {
+      "level": "warning",
+      "code": "clippy::excessive_nesting",
+      "message": "this block is too nested",
+      "file": "src/transport/websocket.rs",
+      "line": 211
+    },
+    {
+      "level": "warning",
+      "code": "clippy::excessive_nesting",
+      "message": "this block is too nested",
+      "file": "src/transport/websocket.rs",
+      "line": 217
+    },
+    {
+      "level": "warning",
+      "code": "clippy::excessive_nesting",
+      "message": "this block is too nested",
+      "file": "src/domain/policy.rs",
+      "line": 54
+    },
+    {
+      "level": "warning",
+      "code": "clippy::excessive_nesting",
+      "message": "this block is too nested",
+      "file": "src/infrastructure/stream/dispatcher.rs",
+      "line": 421
+    },
+    {
+      "level": "warning",
+      "code": "clippy::too_many_lines",
+      "message": "this function has too many lines (110/50)",
+      "file": "src/application/access.rs",
+      "line": 203
+    },
+    {
+      "level": "warning",
+      "code": "clippy::too_many_lines",
+      "message": "this function has too many lines (70/50)",
+      "file": "src/application/access.rs",
+      "line": 383
+    },
+    {
+      "level": "warning",
+      "code": "clippy::too_many_lines",
+      "message": "this function has too many lines (89/50)",
+      "file": "src/application/events/ingestion.rs",
+      "line": 41
+    },
+    {
+      "level": "warning",
+      "code": "clippy::cognitive_complexity",
+      "message": "the function has a cognitive complexity of (27/25)",
+      "file": "src/application/events/review.rs",
+      "line": 47
+    },
+    {
+      "level": "warning",
+      "code": "clippy::too_many_lines",
+      "message": "this function has too many lines (139/50)",
+      "file": "src/application/events/review.rs",
+      "line": 47
+    },
+    {
+      "level": "warning",
+      "code": "clippy::too_many_lines",
+      "message": "this function has too many lines (56/50)",
+      "file": "src/application/events/snapshots.rs",
+      "line": 48
+    },
+    {
+      "level": "warning",
+      "code": "clippy::too_many_lines",
+      "message": "this function has too many lines (58/50)",
+      "file": "src/application/events/snapshots.rs",
+      "line": 140
+    },
+    {
+      "level": "warning",
+      "code": "clippy::too_many_lines",
+      "message": "this function has too many lines (63/50)",
+      "file": "src/application/events/snapshots.rs",
+      "line": 320
+    },
+    {
+      "level": "warning",
+      "code": "clippy::too_many_lines",
+      "message": "this function has too many lines (63/50)",
+      "file": "src/application/retention.rs",
+      "line": 11
+    },
+    {
+      "level": "warning",
+      "code": "clippy::cognitive_complexity",
+      "message": "the function has a cognitive complexity of (38/25)",
+      "file": "src/application/retention.rs",
+      "line": 249
+    },
+    {
+      "level": "warning",
+      "code": "clippy::too_many_lines",
+      "message": "this function has too many lines (106/50)",
+      "file": "src/application/vendor.rs",
+      "line": 54
+    },
+    {
+      "level": "warning",
+      "code": "clippy::too_many_lines",
+      "message": "this function has too many lines (64/50)",
+      "file": "src/application/vendor.rs",
+      "line": 241
+    },
+    {
+      "level": "warning",
+      "code": "clippy::too_many_lines",
+      "message": "this function has too many lines (78/50)",
+      "file": "src/application/vendor.rs",
+      "line": 376
+    },
+    {
+      "level": "warning",
+      "code": "clippy::expect_used",
+      "message": "used `expect()` on a `Result` value",
+      "file": "src/infrastructure/metrics.rs",
+      "line": 13
+    },
+    {
+      "level": "warning",
+      "code": "clippy::expect_used",
+      "message": "used `expect()` on a `Result` value",
+      "file": "src/infrastructure/metrics.rs",
+      "line": 20
+    },
+    {
+      "level": "warning",
+      "code": "clippy::expect_used",
+      "message": "used `expect()` on a `Result` value",
+      "file": "src/infrastructure/metrics.rs",
+      "line": 27
+    },
+    {
+      "level": "warning",
+      "code": "clippy::expect_used",
+      "message": "used `expect()` on a `Result` value",
+      "file": "src/infrastructure/metrics.rs",
+      "line": 31
+    },
+    {
+      "level": "warning",
+      "code": "clippy::cognitive_complexity",
+      "message": "the function has a cognitive complexity of (26/25)",
+      "file": "src/transport/websocket/connection.rs",
+      "line": 101
+    },
+    {
+      "level": "warning",
+      "code": "clippy::too_many_lines",
+      "message": "this function has too many lines (75/50)",
+      "file": "src/transport/websocket/connection.rs",
+      "line": 101
+    }
+  ],
+  "baseline_comparison": {
+    "existing": 54,
+    "new": 0,
+    "resolved": 0
+  }
+}

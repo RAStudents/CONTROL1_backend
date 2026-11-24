@@ -1,0 +1,9 @@
+{
+  "migrations/0001_access.sql": "df7087222edfa98b36827cf3316aa3ef9914e8c0f8e496141c9536e0364e896f",
+  "migrations/0002_events.sql": "b9931650e3bd290e1478aad83bbca4e95ea96ae6394a70dff86b68dd5613fb0e",
+  "migrations/0003_export_lifecycle.sql": "f5c073763883e654953209a2e9b60b680f810d58714137ee8641be3ea4422ae8",
+  "migrations/0004_event_integrity.sql": "c35bab7ebc5f5ae69bd18310b268b4d8248e7c2ed40637c3ba70625fa1b10de1",
+  "migrations/0005_tenant_roles.sql": "2dedf0eea17846e542771a5c64d3f2c299964625760e7b984b3ee0c9f1bba471",
+  "migrations/0006_export_user_quota.sql": "7a9ee554c602de996b10e4fccb971d20780933dbf8a19eb5c56ffc850aa06d3f",
+  "migrations/0007_snapshot_item_event_index.sql": "654d0dc77b7c303b652489892d138e34b2d8f84807fd7379249b79dba7c629c5"
+}

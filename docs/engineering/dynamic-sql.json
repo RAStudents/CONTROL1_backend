@@ -1,0 +1,79 @@
+{
+  "a7dd55518f375505157fe3fdb62b7c921e11699b9a4bca4be6cf4be45665b177": {
+    "path": "src/bootstrap.rs",
+    "purpose": "Verify pinned session affinity using a generated UUID marker.",
+    "validation": [
+      "scripts/sql_templates.py:render_queries",
+      "scripts/benchmark_queries.py:validate_rendered",
+      "tests/compose_smoke.py",
+      "tests/contract_regressions.py"
+    ],
+    "input_safety": "Generated UUID only, executed using the simple protocol."
+  },
+  "65dd6102b879342181b8c91137609050c44af491dc64b446a2c5ddb97a22013d": {
+    "path": "src/infrastructure/event_repository.rs",
+    "purpose": "Compose the finite event projection, filter, pagination and bounded count variants.",
+    "validation": [
+      "scripts/sql_templates.py:render_queries",
+      "scripts/benchmark_queries.py:validate_rendered",
+      "tests/compose_smoke.py",
+      "tests/contract_regressions.py"
+    ],
+    "input_safety": "Static projections/joins/order; max count is bounded numeric configuration. Request values are SQLx bind parameters."
+  },
+  "23b49c06f70291d473f0659120e40924456b88a6fc3bd12e916515bf92ad7a7f": {
+    "path": "src/infrastructure/event_repository.rs",
+    "purpose": "Compose the finite event projection, filter, pagination and bounded count variants.",
+    "validation": [
+      "scripts/sql_templates.py:render_queries",
+      "scripts/benchmark_queries.py:validate_rendered",
+      "tests/compose_smoke.py",
+      "tests/contract_regressions.py"
+    ],
+    "input_safety": "Static projections/joins/order; max count is bounded numeric configuration. Request values are SQLx bind parameters."
+  },
+  "f313b1dc92d6e76f804095f9b498394f7d17d599ff8f57fd72b6b55315ffe508": {
+    "path": "src/infrastructure/event_repository.rs",
+    "purpose": "Compose the finite event projection, filter, pagination and bounded count variants.",
+    "validation": [
+      "scripts/sql_templates.py:render_queries",
+      "scripts/benchmark_queries.py:validate_rendered",
+      "tests/compose_smoke.py",
+      "tests/contract_regressions.py"
+    ],
+    "input_safety": "Static projections/joins/order; max count is bounded numeric configuration. Request values are SQLx bind parameters."
+  },
+  "69ee248857122305b4ba747de5cfa4ce023dab2792c7374f0684f9953f9bc100": {
+    "path": "src/infrastructure/event_repository.rs",
+    "purpose": "Compose the finite event projection, filter, pagination and bounded count variants.",
+    "validation": [
+      "scripts/sql_templates.py:render_queries",
+      "scripts/benchmark_queries.py:validate_rendered",
+      "tests/compose_smoke.py",
+      "tests/contract_regressions.py"
+    ],
+    "input_safety": "Static projections/joins/order; max count is bounded numeric configuration. Request values are SQLx bind parameters."
+  },
+  "e24f1a8b863511cd74bbb609ef9afe6f8995f20e2efa9578c07543fa005468db": {
+    "path": "src/infrastructure/event_repository.rs",
+    "purpose": "Compose the finite event projection, filter, pagination and bounded count variants.",
+    "validation": [
+      "scripts/sql_templates.py:render_queries",
+      "scripts/benchmark_queries.py:validate_rendered",
+      "tests/compose_smoke.py",
+      "tests/contract_regressions.py"
+    ],
+    "input_safety": "Static projections/joins/order; max count is bounded numeric configuration. Request values are SQLx bind parameters."
+  },
+  "1b55808da25091bd2019aa1873fcc85d9ecc95665c6382b26bc8fb2f6ebce650": {
+    "path": "src/infrastructure/event_repository.rs",
+    "purpose": "Compose the finite event projection, filter, pagination and bounded count variants.",
+    "validation": [
+      "scripts/sql_templates.py:render_queries",
+      "scripts/benchmark_queries.py:validate_rendered",
+      "tests/compose_smoke.py",
+      "tests/contract_regressions.py"
+    ],
+    "input_safety": "Static projections/joins/order; max count is bounded numeric configuration. Request values are SQLx bind parameters."
+  }
+}
