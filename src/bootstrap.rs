@@ -7,7 +7,7 @@ use sqlx::{
 };
 use std::{env, net::SocketAddr, path::PathBuf, sync::Arc, time::Duration};
 use tokio::sync::{Semaphore, broadcast};
-use tower_http::cors::CorsLayer;
+use tower_http::cors::{AllowOrigin, CorsLayer};
 
 fn secret(name: &str) -> Result<Arc<Vec<u8>>> {
     let value = env::var(name).with_context(|| format!("{name} is required"))?;
@@ -15,8 +15,11 @@ fn secret(name: &str) -> Result<Arc<Vec<u8>>> {
     Ok(Arc::new(value.into_bytes()))
 }
 
-fn cors() -> Result<CorsLayer> {
-    let origins = env::var("CORS_ORIGINS").unwrap_or_default();
+fn cors_origins(origins: &str) -> Result<AllowOrigin> {
+    if origins.trim() == "*" {
+        return Ok(AllowOrigin::any());
+    }
+
     let mut allowed = Vec::new();
     for origin in origins.split(',').map(str::trim).filter(|s| !s.is_empty()) {
         let url = url::Url::parse(origin)?;
@@ -27,8 +30,13 @@ fn cors() -> Result<CorsLayer> {
         );
         allowed.push(HeaderValue::from_str(origin)?);
     }
+
+    Ok(AllowOrigin::list(allowed))
+}
+
+fn cors(origins: &str) -> Result<CorsLayer> {
     Ok(CorsLayer::new()
-        .allow_origin(allowed)
+        .allow_origin(cors_origins(origins)?)
         .allow_methods([
             Method::GET,
             Method::POST,
@@ -261,7 +269,7 @@ async fn runtime(pool: PgPool) -> Result<Runtime> {
     )?;
     let export_dir = PathBuf::from(env::var("EXPORT_DIR")?);
     tokio::fs::create_dir_all(&export_dir).await?;
-    let cors = cors()?;
+    let cors = cors(&env::var("CORS_ORIGINS").unwrap_or_default())?;
     let (nats_reconnected, _) = broadcast::channel(16);
     let (nats, stream) = connect_nats(&env::var("NATS_URL")?, &nats_reconnected).await?;
     let mut listener = sqlx::postgres::PgListener::connect_with(&pool).await?;
@@ -321,5 +329,98 @@ async fn shutdown(mut terminate: tokio::signal::unix::Signal) {
     tokio::select! {
         _ = tokio::signal::ctrl_c() => {},
         _ = terminate.recv() => {},
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::{cors, cors_origins};
+    use anyhow::Result;
+    use axum::{Router, routing::get};
+    use std::{future::IntoFuture, time::Duration};
+    use tokio::{
+        io::{AsyncReadExt, AsyncWriteExt},
+        net::{TcpListener, TcpStream},
+    };
+
+    async fn assert_preflight(origins: &str, origin: &str, allowed: Option<&str>) -> Result<()> {
+        let router = Router::new()
+            .route("/", get(|| async { "ok" }))
+            .layer(cors(origins)?);
+        let listener = TcpListener::bind("127.0.0.1:0").await?;
+        let address = listener.local_addr()?;
+        let (shutdown, stopped) = tokio::sync::oneshot::channel();
+        let stop = async {
+            let _ = stopped.await;
+        };
+        let server = tokio::spawn(
+            axum::serve(listener, router)
+                .with_graceful_shutdown(stop)
+                .into_future(),
+        );
+
+        let mut stream = TcpStream::connect(address).await?;
+        let request = format!(
+            "OPTIONS / HTTP/1.1\r\nHost: {address}\r\nOrigin: {origin}\r\n\
+             Access-Control-Request-Method: POST\r\n\
+             Access-Control-Request-Headers: authorization\r\nConnection: close\r\n\r\n"
+        );
+        stream.write_all(request.as_bytes()).await?;
+        let mut response = Vec::new();
+        tokio::time::timeout(Duration::from_secs(5), stream.read_to_end(&mut response)).await??;
+        let _ = shutdown.send(());
+        server.await??;
+
+        let response = String::from_utf8(response)?;
+        assert!(response.starts_with("HTTP/1.1 200"), "{response}");
+        let allowed_origin = response
+            .lines()
+            .find_map(|line| line.strip_prefix("access-control-allow-origin: "));
+        assert_eq!(allowed_origin, allowed);
+        assert!(response.contains("access-control-allow-methods: GET,POST,PUT,PATCH,OPTIONS"));
+        assert!(response.contains("access-control-allow-headers: authorization"));
+        assert!(!response.contains("access-control-allow-credentials:"));
+        Ok(())
+    }
+
+    #[tokio::test]
+    async fn preflight_enforces_allowlists_and_explicit_wildcard_without_credentials() -> Result<()>
+    {
+        let origin = "https://app.example.test";
+        let unlisted = "https://unlisted.example.test";
+        assert_preflight("", origin, None).await?;
+        assert_preflight("*", unlisted, Some("*")).await?;
+        assert_preflight(origin, origin, Some(origin)).await?;
+        assert_preflight(origin, unlisted, None).await?;
+        Ok(())
+    }
+
+    #[test]
+    fn cors_accepts_empty_lists_exact_origins_and_explicit_wildcard() {
+        for origins in [
+            "",
+            "  ",
+            "*",
+            " * ",
+            "https://app.example.test",
+            "http://localhost:5173, https://app.example.test",
+        ] {
+            assert!(cors_origins(origins).is_ok(), "{origins}");
+        }
+    }
+
+    #[test]
+    fn cors_rejects_paths_credentials_other_schemes_and_mixed_wildcards() {
+        for origins in [
+            "null",
+            "ftp://app.example.test",
+            "https://app.example.test/",
+            "https://user@app.example.test",
+            "https://app.example.test/path",
+            "*,https://app.example.test",
+            "https://app.example.test,*",
+        ] {
+            assert!(cors_origins(origins).is_err(), "{origins}");
+        }
     }
 }
