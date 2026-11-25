@@ -136,8 +136,12 @@ impl Access {
             );
             value
         });
-        let mut sources = self.tenant.clone();
-        sources.extend(self.support.clone());
+        let sources: BTreeMap<String, Vec<&'static str>> = self
+            .tenant
+            .iter()
+            .chain(self.support.iter())
+            .map(|(permission, source)| (permission.clone(), vec![*source]))
+            .collect();
         let mut dto = json!({
             "company_id":company_id,"company_name":self.company.name,
             "company_status": if self.company.restriction.is_some() {"RESTRICTED"} else {"ACTIVE"},

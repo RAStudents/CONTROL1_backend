@@ -190,8 +190,8 @@ def smoke():
     context, _ = request("/api/v1/auth/context", token=token)
     assert context["user_id"] == user and context["can_browse_all_companies"]
     access, headers = request(ROOT + "/access", token=token)
-    assert access["permission_sources"]["EVENTS_READ"] == "DIRECT_MEMBERSHIP"
-    assert access["permission_sources"]["DEVICE_RESTART"] == "SUPPORT_GRANT"
+    assert access["permission_sources"]["EVENTS_READ"] == ["DIRECT_MEMBERSHIP"]
+    assert access["permission_sources"]["DEVICE_RESTART"] == ["SUPPORT_GRANT"]
     request(ROOT + "/access", token=token, extra={"If-None-Match": headers["ETag"]})
     _, reader_headers = request(ROOT + "/access", token=read_token)
     request(ROOT + "/access", token=read_token, extra={"If-None-Match": reader_headers["ETag"]}, expect=304)
