@@ -58,7 +58,7 @@ services:
       MAX_INGEST_BATCH_V1: ${MAX_INGEST_BATCH_V1:-100}
       EXPORT_DIR: /exports
     ports:
-      - "${BIND_HOST:-127.0.0.1}:${HTTP_PORT:-8080}:8080"
+      - "${BIND_HOST:-127.0.0.1}:${LAN_HTTP_PORT:-${HTTP_PORT:-8080}}:8080"
     volumes:
       - export-data:/exports
     restart: unless-stopped
