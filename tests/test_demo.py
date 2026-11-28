@@ -51,9 +51,11 @@ class DemoScriptTests(unittest.TestCase):
             environment.pop("VIDEO_URL", None)
             if video is not None:
                 environment["VIDEO_URL"] = video
-            process = subprocess.Popen(["bash", str(ROOT / "add-events.sh")], env=environment,
-                                       stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-                                       text=True, start_new_session=True)
+            process = subprocess.Popen(
+                ["bash", str(ROOT / "scripts/add-events.sh")], env=environment,
+                stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                text=True, start_new_session=True,
+            )
             try:
                 self.assertTrue(received.wait(15), "demo script did not ingest an event")
             finally:
